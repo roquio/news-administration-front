@@ -1,10 +1,11 @@
-import {NgModule} from "@angular/core";
+import {LOCALE_ID, NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {BrowserModule} from "@angular/platform-browser";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {SharedModule} from "../shared/shared.module";
+import {AuthInterceptor} from "./interceptors/auth.interceptor";
 
 
 @NgModule({
@@ -16,6 +17,17 @@ import {SharedModule} from "../shared/shared.module";
         BrowserModule,
         NgbModule,
         SharedModule
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        },
+        {
+            provide: LOCALE_ID,
+            useValue: "fr-FR"
+        }
     ]
 })
 export class CoreModule {
