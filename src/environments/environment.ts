@@ -1,5 +1,7 @@
 export const environment = {
     production: true,
     apiUrl: "",
-    loginUrl: ""
+    binaryApiUrl: "",
+    loginUrl: "",
+    logoutUrl: ""
 };
