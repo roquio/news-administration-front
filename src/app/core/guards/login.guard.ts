@@ -3,6 +3,6 @@ import {inject} from "@angular/core";
 import {AuthService} from "../services/auth.service";
 
 
-export const authGuard: CanActivateFn = (route, state) => {
-    return inject(AuthService).canAuthActivate(route, state);
+export const loginGuard: CanActivateFn = (route, state) => {
+    return inject(AuthService).canLoginActivate(route, state);
 };

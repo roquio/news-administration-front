@@ -9,7 +9,6 @@ import {AuthInterceptor} from "./interceptors/auth.interceptor";
 
 
 @NgModule({
-    declarations: [],
     imports: [
         CommonModule,
         RouterModule,

@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from "@angular/common/http";
-import {map, Observable, of, switchMap, take, tap} from "rxjs";
+import {map, Observable, of, switchMap, take} from "rxjs";
 import {AuthService} from "../services/auth.service";
 import {environment} from "../../../environments/environment";
 
@@ -16,9 +16,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let response: Observable<HttpEvent<any>>;
-        if (request.url.startsWith(environment.apiUrl)) {
+        if (request.url.startsWith(environment.apiUrl) || request.url.startsWith(environment.binaryApiUrl)) {
             response = of(request).pipe(
-                switchMap(() => this.authService.token.pipe()),
+                switchMap(() => this.authService.token$.pipe()),
                 take(1),
                 map(token => {
                     if (token) {

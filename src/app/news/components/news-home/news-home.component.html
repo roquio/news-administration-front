@@ -1,0 +1,37 @@
+<p>
+    <a [routerLink]="['.']" href="javascript:">News home</a>
+</p>
+
+<div *ngIf="loading$ | async" class="spinner-border mb-3" role="status">
+    <span class="visually-hidden"></span>
+</div>
+
+<ng-container *ngIf="context$ | async as context">
+    <ul *ngIf="context.editableSources && context.editableSources.length > 1" class="nav nav-pills mb-3">
+        <li *ngFor="let source of context.editableSources" class="nav-item">
+            <!--<a (click)="selectedSourceId = source.id" [class.active]="selectedSourceId === source.id" href="javascript:" class="nav-link">{{ source.title }}</a>-->
+            <a [routerLink]="[source.id]" [class.active]="(selectedSourceId$ | async) === source.id" href="javascript:" class="nav-link">
+                <span>{{ source.title }}</span>
+            </a>
+        </li>
+    </ul>
+</ng-container>
+
+<router-outlet></router-outlet>
+
+
+<!--<div class="mb-3">-->
+
+
+
+<!--</div>-->
+
+
+<!--<div class="mb-3">-->
+<!--    <app-news-source-preview *ngIf="selectedSourceId$ | async as sourceId" [sourceId]="sourceId"></app-news-source-preview>-->
+<!--</div>-->
+
+
+<!--<div>-->
+<!--    <a [routerLink]="['./partenaires']" class="btn btn-outline-secondary">Partenaires</a>-->
+<!--</div>-->

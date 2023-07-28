@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg text-bg-light shadow">
+    <div class="container-fluid">
+        <!--Brand-->
+        <a [routerLink]="['.']" class="navbar-brand">Administration des actualités</a>
+
+        <!--Toggler-->
+        <button (click)="navbarCollapsed = !navbarCollapsed" type="button" class="navbar-toggler">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div [ngbCollapse]="navbarCollapsed" class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-lg-auto">
+                <!--<li *ngIf="loading$ | async" class="nav-item placeholder-glow">-->
+                <li *ngIf="loading$ | async" class="nav-item placeholder-glow">
+                    <div class="navbar-text">
+                        <span class="placeholder" [style.width.em]="6"></span>
+                    </div>
+                </li>
+
+                <ng-container *ngIf="!(loading$ | async)">
+                    <li *ngIf="!(username$ | async)" class="nav-item">
+                        <a (click)="login()" href="javascript:" class="nav-link">Connexion</a>
+                    </li>
+
+                    <li *ngIf="username$ | async as username" ngbDropdown class="nav-item dropdown">
+                        <a ngbDropdownToggle href="javascript:" class="nav-link dropdown-toggle">{{ username }}</a>
+                        <ul ngbDropdownMenu class="dropdown-menu dropdown-menu-lg-end">
+                            <li>
+                                <a (click)="logout()" ngbDropdownItem href="javascript:">Déconnexion</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ng-container>
+            </ul>
+        </div>
+    </div>
+</nav>
