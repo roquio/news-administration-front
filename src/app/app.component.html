@@ -1,0 +1,13 @@
+<app-header></app-header>
+
+<main class="flex-grow-1 py-4">
+    <div class="container-fluid">
+        <div [hidden]="!(navigationLoading$ | async)" class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+
+        <router-outlet></router-outlet>
+    </div>
+</main>
+
+<app-footer></app-footer>
