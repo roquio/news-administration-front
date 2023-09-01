@@ -1,8 +1,8 @@
 import {Component, OnInit} from "@angular/core";
-import {Observable} from "rxjs";
+import {filter, map, Observable, tap} from "rxjs";
 import {NewsSource} from "../../models/news-source";
 import {NewsService} from "../../services/news.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 
 @Component({
@@ -12,27 +12,38 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class NewsSourcePreviewComponent implements OnInit {
 
-    source?: NewsSource;
-
     loading$!: Observable<boolean>;
+    source$!: Observable<NewsSource>;
 
 
     constructor(
         private route: ActivatedRoute,
+        private router: Router,
         private newsService: NewsService
     ) {
     }
 
 
     ngOnInit(): void {
-        this.route.data.subscribe(data => {
-            const source = data["source"];
-            if (source) {
-                this.source = source;
-            }
-        });
-
         this.loading$ = this.newsService.loading$;
+
+        this.route.paramMap.subscribe(params => {
+            this.source$ = this.newsService.getSelectedSource(params).pipe(
+                map(source => source!)
+            );
+
+            this.source$.pipe(
+                tap(source => {
+                    console.log(`source = ${source?.id}`);
+                    if (!source) {
+                        console.log(`redirection`);
+                        this.router.navigate(["./aucun-partenaire"]);
+                    }
+                }),
+                filter(source => !!source),
+                map(source => source!)
+            ).subscribe();
+        });
     }
 
 }

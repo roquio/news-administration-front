@@ -5,7 +5,6 @@ import {NewsHomeComponent} from "./components/news-home/news-home.component";
 import {NewsSourcesDashboardComponent} from "./components/news-sources-dashboard/news-sources-dashboard.component";
 import {adminGuard} from "../core/guards/admin.guard";
 import {NewsSourcePreviewComponent} from "./components/news-source-preview/news-source-preview.component";
-import {selectedSourceResolver} from "./resolvers/selected-source.resolver";
 import {PageNotFoundComponent} from "../shared/components/page-not-found/page-not-found.component";
 import {NoNewsSourceComponent} from "./components/no-news-source/no-news-source.component";
 
@@ -27,17 +26,11 @@ const routes: Routes = [
                     {
                         path: ":id",
                         component: NewsSourcePreviewComponent,
-                        resolve: {
-                            source: selectedSourceResolver
-                        }
                     },
                     {
                         path: "",
                         pathMatch: "full",
-                        component: NewsSourcePreviewComponent,
-                        resolve: {
-                            source: selectedSourceResolver
-                        }
+                        component: NewsSourcePreviewComponent
                     },
                     {
                         path: "**",

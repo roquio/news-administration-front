@@ -5,16 +5,18 @@
                 <div class="row">
                     <div class="col-2">
                         <div [class.placeholder]="loading$ | async" class="ratio ratio-1x1">
-                            <img *ngIf="source && source.pictureUrl" [attr.src]="source.pictureUrl | secure | async" alt="">
+                            <ng-container *ngIf="source$ | async as source">
+                                <img *ngIf="source.pictureUrl" [attr.src]="source.pictureUrl | secure | async" alt="">
+                            </ng-container>
                         </div>
                     </div>
 
                     <div class="col-10">
-                        <h2 [ngClass]="{'placeholder w-50': loading$ | async}" class="card-title">
-                            <ng-container *ngIf="source">{{ source.title }}</ng-container>
+                        <h2 [ngClass]="{'placeholder placeholder-lg w-50': loading$ | async}" class="card-title">
+                            <ng-container *ngIf="source$ | async as source">{{ source.title }}</ng-container>
                         </h2>
 
-                        <p class="card-text">Identifier = {{ source?.id }}</p>
+                        <p class="card-text">Identifier = {{ (source$ | async)?.id }}</p>
                     </div>
                 </div>
             </div>
